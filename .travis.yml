@@ -1,11 +1,9 @@
 language: java
 sudo: false
-
 matrix:
   include:
-    - env: JDK='Oracle JDK 8'
-      jdk: oraclejdk8
-
+  - env: JDK='Oracle JDK 8'
+    jdk: oraclejdk8
 before_install:
 - chmod +x ./gradlew
 script:
@@ -22,7 +20,9 @@ cache:
   - "$HOME/.gradle/wrapper/"
 deploy:
   provider: releases
-  user: "taowenyin"
-  password: "05200902"
-  file: build/libs/ElectricIOTDaemon.jar
+  api_key:
+    secure: O0/mabN4Fg9EpJROFYy9+EFOE/8rwL+xkflVv7r1AqKO2W3lnUnx0OZg//cYApVUiQfx5ifdu8FT56i7lP8GoaBnxu6yYExfaO1m2C3Qu+E7tSCb2pHv2d7nqcphanAReXZgozGoq9pfyloOg7swmaNyIFw2er00xTfbmK2qdfnF9TZ/xg66ddoBN1mXgjfjxUakDYHwLb67PZdbsM5+OubPKReMl9Ixhmr6v4EfmgD2lnsYSgE5pOSuruN+ryYPpuSoZAvll2IP7307zJmvTkaKCdX9D6Dsy8UnL/yTcHdfU39j5fLTqbnZDYCWvMtzZvWxfbsa2cw2iMWEsehw7FrgJXwnLOzhGR4EPKZ6R7t+Ne3nnvm5DQTrxO6n4V/n7mBiMsVQK6g4KjO4ttizSRB1EnoRO2CAU/YNAUzJ05mCWqESpMP/5+80ilhfKNqettYWyIKMlEyXK5nMn5MV1FWP0HaMpPz75XiK6FxhBIrZKwsbkauN9mxjsc82jhDtMpjQ5hPId0ZbBKbqcfxaNFWIqArwhMHECWSlR699dnFFGYkCyG7HPYK04fP+ahdKjFjgpcedZEUCdswIIT6mxZZErDJ0h9835Idi7cpZG9eyX4lN/LVHPzs3MkOULx7ihiETuNG3LxjouWFq1QwqIkKripQ6MmQxgO5XGVwFOP0=
+  file: 'build/libs/ElectricIOTDaemon.jar'
   skip_cleanup: true
+  on:
+    repo: taowenyin/ElectricIOTDaemon
