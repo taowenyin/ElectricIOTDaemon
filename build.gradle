@@ -1,0 +1,49 @@
+group 'siso.edu.cn'
+//version '0.1'
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'siso.edu.cn.DaemonMain'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
+    compile 'com.squareup.okhttp3:okhttp:3.12.1'
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
+    // https://github.com/alibaba/fastjson
+    compile 'com.alibaba:fastjson:1.2.54'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+jar {
+    from {
+        //添加依懒到打包文件
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
+task clearJar(type: Delete) {
+    delete 'build/libs/lib'
+}
+
+task copyJar(type: Copy) {
+    from configurations.runtime
+    into('build/libs/lib')
+}
+
+task release(type: Copy, dependsOn: [build, clearJar, copyJar])
+
+// 设置任务的编码格式
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
