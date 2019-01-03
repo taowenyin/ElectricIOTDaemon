@@ -25,8 +25,7 @@ public class DaemonMain {
                     e.printStackTrace();
                 }
             }
-        }, 0, 5 * 1000);
-
+        }, 0, 1 * 60 * 1000);
 
     }
 
