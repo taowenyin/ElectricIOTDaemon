@@ -31,22 +31,13 @@ public class LocationChecking {
             Request request = new Request.Builder().url(GlobalSetting.SERVE_URL).put(body).build();
 
             // 提交HTTP请求
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    System.out.println("===onFailure===");
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    JSONObject object = JSON.parseObject(response.body().string());
-                    if (object.getIntValue("code") == 0) {
-                        System.out.println("ID = " + object.getJSONObject("data").getIntValue("id") + " Update Location OK");
-                    } else {
-                        System.out.println("ID = " + object.getJSONObject("data").getIntValue("id") + " Update Location Fail");
-                    }
-                }
-            });
+            Response response = client.newCall(request).execute();
+            JSONObject object = JSON.parseObject(response.body().string());
+            if (object.getIntValue("code") == 0) {
+                System.out.println("ID = " + object.getJSONObject("data").getIntValue("id") + " Update Location OK");
+            } else {
+                System.out.println("ID = " + object.getJSONObject("data").getIntValue("id") + " Update Location Fail");
+            }
         }
 
         // 关闭数据集
