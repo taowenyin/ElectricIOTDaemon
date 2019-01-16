@@ -36,7 +36,7 @@ public class LocationChecking {
             if (object.getIntValue("code") == 0) {
                 System.out.println("ID = " + object.getJSONObject("data").getIntValue("id") + " Update Location OK");
             } else {
-                System.out.println("ID = " + object.getJSONObject("data").getIntValue("id") + " Update Location Fail");
+                System.out.println("ID = " + resultSet.getInt("id") + " Update Location Fail");
             }
         }
 
