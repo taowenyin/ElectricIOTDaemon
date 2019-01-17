@@ -29,7 +29,7 @@ public class LocationChecking {
         ResultSet resultSet = statement.executeQuery(GlobalSetting.CHECKING_SQL);
 
         while (resultSet.next()) {
-            System.out.println(String.format("ID = %d is checking location", resultSet.getInt("id")));
+            System.out.println(String.format("[%s]:ID = %d is checking location", simpleDateFormat.format(new Date()), resultSet.getInt("id")));
 
             // 构建提交数据的Body
             RequestBody body = new FormBody.Builder().add("id", String.valueOf(resultSet.getInt("id"))).build();
