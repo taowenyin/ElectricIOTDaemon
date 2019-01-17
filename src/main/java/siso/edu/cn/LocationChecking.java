@@ -7,12 +7,18 @@ import okhttp3.*;
 import java.io.IOException;
 import java.sql.*;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class LocationChecking {
 
     private static final OkHttpClient client = new OkHttpClient();
 
     public static void Checking() throws ClassNotFoundException, SQLException, IOException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+
         // 注册JDBC驱动
         Class.forName(GlobalSetting.JDBC_DRIVER);
         // 打开数据库链接
@@ -34,9 +40,9 @@ public class LocationChecking {
             Response response = client.newCall(request).execute();
             JSONObject object = JSON.parseObject(response.body().string());
             if (object.getIntValue("code") == 0) {
-                System.out.println("ID = " + object.getJSONObject("data").getIntValue("id") + " Update Location OK");
+                System.out.println(String.format("[%s]:ID = %d Update Location OK", simpleDateFormat.format(new Date()), object.getJSONObject("data").getIntValue("id")));
             } else {
-                System.out.println("ID = " + resultSet.getInt("id") + " Update Location Fail");
+                System.out.println(String.format("[%s]:ID = %d Update Location OK", simpleDateFormat.format(new Date()), resultSet.getInt("id")));
             }
         }
 
