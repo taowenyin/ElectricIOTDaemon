@@ -1,6 +1,7 @@
 package siso.edu.cn;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import okhttp3.*;
 
@@ -38,8 +39,15 @@ public class LocationChecking {
 
             // 提交HTTP请求
             Response response = client.newCall(request).execute();
-            JSONObject object = JSON.parseObject(response.body().string());
-            if (object.getIntValue("code") == 0) {
+            JSONObject object = null;
+            try {
+                object = JSON.parseObject(response.body().string());
+            } catch (JSONException e) {
+                System.out.println("JSON Data Error");
+                continue;
+            }
+
+            if (object != null && object.getIntValue("code") == 0) {
                 System.out.println(String.format("[%s]:ID = %d Update Location OK", simpleDateFormat.format(new Date()), object.getJSONObject("data").getIntValue("id")));
             } else {
                 System.out.println(String.format("[%s]:ID = %d Update Location OK", simpleDateFormat.format(new Date()), resultSet.getInt("id")));
