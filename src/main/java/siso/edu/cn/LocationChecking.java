@@ -43,7 +43,7 @@ public class LocationChecking {
             try {
                 object = JSON.parseObject(response.body().string());
             } catch (JSONException e) {
-                System.out.println("JSON Data Error");
+                System.out.println(String.format("[%s]:ID = %d Update FAIL, JSON Data Error", simpleDateFormat.format(new Date()), resultSet.getInt("id")));
                 continue;
             }
 
