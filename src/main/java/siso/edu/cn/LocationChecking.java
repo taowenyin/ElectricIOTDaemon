@@ -50,7 +50,7 @@ public class LocationChecking {
             if (object != null && object.getIntValue("code") == 0) {
                 System.out.println(String.format("[%s]:ID = %d Update Location OK", simpleDateFormat.format(new Date()), object.getJSONObject("data").getIntValue("id")));
             } else {
-                System.out.println(String.format("[%s]:ID = %d Update Location OK", simpleDateFormat.format(new Date()), resultSet.getInt("id")));
+                System.out.println(String.format("[%s]:ID = %d Update Location FAIL", simpleDateFormat.format(new Date()), resultSet.getInt("id")));
             }
         }
 
