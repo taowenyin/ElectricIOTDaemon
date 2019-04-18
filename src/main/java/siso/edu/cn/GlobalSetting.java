@@ -12,12 +12,14 @@ public class GlobalSetting {
 //    public static final String CHECKING_SQL = "SELECT * FROM electric_iot.device_location WHERE " +
 //            "electric_iot.device_location.longitude IS NULL OR " +
 //            "electric_iot.device_location.latitude IS NULL LIMIT 10";
+
     public static final String CHECKING_SQL = "SELECT * FROM electric_iot.device_location WHERE " +
-            "(electric_iot.device_location.longitude IS NULL) OR " +
+            "(electric_iot.device_location.is_delete = 0) AND " +
+            "((electric_iot.device_location.longitude IS NULL) OR " +
             "(electric_iot.device_location.latitude IS NULL) OR " +
             "(electric_iot.device_location.longitude IS NOT NULL AND " +
             "electric_iot.device_location.latitude IS NOT NULL AND " +
-            "electric_iot.device_location.province IS NULL) LIMIT 10";
+            "electric_iot.device_location.province IS NULL)) LIMIT 10";
 
     public static final String SERVE_URL = "http://localhost:8080/api/manage/location";
 }
