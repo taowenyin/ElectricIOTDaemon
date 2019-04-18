@@ -21,5 +21,5 @@ public class GlobalSetting {
             "electric_iot.device_location.latitude IS NOT NULL AND " +
             "electric_iot.device_location.province IS NULL)) LIMIT 10";
 
-    public static final String SERVE_URL = "http://172.81.239.174:8080/ElectricIOTServer/api/manage/location";
+    public static final String SERVE_URL = "http://172.81.239.174:8080/ElectricIOTServer/api/manage/location"; 
 }
