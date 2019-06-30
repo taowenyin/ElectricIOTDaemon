@@ -1,12 +1,7 @@
 package siso.edu.cn;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import okhttp3.*;
-
 import java.io.IOException;
 import java.sql.*;
-import java.sql.Connection;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,7 +20,7 @@ public class DaemonMain {
                     e.printStackTrace();
                 }
             }
-        }, 5 * 60 * 1000, 1 * 60 * 1000);
+        }, 0, 5000);
 
     }
 
