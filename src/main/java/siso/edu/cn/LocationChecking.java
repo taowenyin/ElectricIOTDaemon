@@ -2,7 +2,6 @@ package siso.edu.cn;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import okhttp3.*;
 import org.apache.commons.lang3.StringUtils;
@@ -272,16 +271,15 @@ public class LocationChecking {
                 data = client.newCall(request).execute().body().string();
                 JSONObject itemGeocodeNode = JSON.parseObject(data);
 
-                String itemCity = geocodeObject.getJSONObject("regeocode").getJSONObject("addressComponent").getString("city");
+                String itemCity = itemGeocodeNode.getJSONObject("regeocode").getJSONObject("addressComponent").get("city") instanceof JSONArray ?
+                        null : itemGeocodeNode.getJSONObject("regeocode").getJSONObject("addressComponent").getString("city");
                 // 如果数据错误则删除
                 if (itemCity == null) {
-                    System.out.println(String.format("[%s]ERROR:ID = %d 子基站信息转换错误", simpleDateFormat.format(new Date()), id));
-                    statement.executeUpdate(String.format(GlobalSetting.DELETE_DATA_SQL, id));
-                    continue;
-                } else {
-                    cityList.add(itemCity);
-                    cityEquals.add(itemCity);
+                    itemCity = itemGeocodeNode.getJSONObject("regeocode").getJSONObject("addressComponent").getString("province");
                 }
+
+                cityList.add(itemCity);
+                cityEquals.add(itemCity);
             }
 
             // Step6：如果全部市数据相同，则保存
