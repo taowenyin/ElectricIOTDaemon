@@ -13,7 +13,6 @@ public class DaemonMain {
         locationTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("===Check Device Location===");
                 try {
                     LocationChecking.Checking();
                 } catch (ClassNotFoundException | SQLException | IOException e) {
