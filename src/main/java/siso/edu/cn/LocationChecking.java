@@ -248,6 +248,7 @@ public class LocationChecking {
                 Request weatherRequest = new Request.Builder().url(weatherUrl).build();
                 String weatherData = client.newCall(weatherRequest).execute().body().string();
                 JSONObject weatherNode = JSON.parseObject(weatherData);
+                System.out.println(weatherData);
                 String temp = weatherNode.getJSONObject("result").getJSONObject("sk").getString("temp");
                 String humidity = weatherNode.getJSONObject("result").getJSONObject("sk").getString("humidity");
                 String weather = weatherNode.getJSONObject("result").getJSONObject("today").getString("weather");
