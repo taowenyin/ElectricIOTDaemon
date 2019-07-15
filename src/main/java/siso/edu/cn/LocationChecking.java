@@ -249,6 +249,11 @@ public class LocationChecking {
                 String weatherData = client.newCall(weatherRequest).execute().body().string();
                 JSONObject weatherNode = JSON.parseObject(weatherData);
                 System.out.println(weatherData);
+                if (weatherNode.getIntValue("resultcode") != 200) {
+                    System.out.println("网络错误，清空获取的经纬度数据，准备重新获取数据");
+                    statement.executeUpdate(String.format(GlobalSetting.CLEAN_SQL, id));
+                    continue;
+                }
                 String temp = weatherNode.getJSONObject("result").getJSONObject("sk").getString("temp");
                 String humidity = weatherNode.getJSONObject("result").getJSONObject("sk").getString("humidity");
                 String weather = weatherNode.getJSONObject("result").getJSONObject("today").getString("weather");
