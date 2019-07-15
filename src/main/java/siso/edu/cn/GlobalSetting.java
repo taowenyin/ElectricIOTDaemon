@@ -36,6 +36,16 @@ public class GlobalSetting {
             "electric_iot.device_location.district = '%s' " +
             "WHERE electric_iot.device_location.id = %d";
 
+    public static final String CLEAN_SQL = "UPDATE electric_iot.device_location " +
+            "SET electric_iot.device_location.longitude = null, " +
+            "electric_iot.device_location.longitude_direction = null, " +
+            "electric_iot.device_location.latitude = null, " +
+            "electric_iot.device_location.latitude_direction = null, " +
+            "electric_iot.device_location.province = null, " +
+            "electric_iot.device_location.city = null, " +
+            "electric_iot.device_location.district = null " +
+            "WHERE electric_iot.device_location.id = %d";
+
     public static final String UPDATE_LOCAL_SQL = "UPDATE electric_iot.device_location " +
             "SET electric_iot.device_location.province = '%s', " +
             "electric_iot.device_location.city = '%s', " +
