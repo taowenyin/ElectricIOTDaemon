@@ -320,6 +320,8 @@ public class LocationChecking {
 
             System.out.println(String.format("[%s]SUCCESS[1]:ID = %d 更新经纬度和地理信息完成", simpleDateFormat.format(new Date()), id));
         }
+
+        close();
     }
 
     public static void close() throws SQLException {
@@ -328,5 +330,10 @@ public class LocationChecking {
         previousStatement.close();
         // 关闭数据链接
         connection.close();
+
+        // 清空对象
+        statement = null;
+        previousStatement = null;
+        connection = null;
     }
 }
