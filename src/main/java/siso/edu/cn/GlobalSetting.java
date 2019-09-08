@@ -64,6 +64,8 @@ public class GlobalSetting {
     public static final String AGPS_CONVERT_URL = "http://api.gpsspg.com/bs/?oid=%s&key=9564xy0zx29yu427ywz50439u49uu16370yxx&type=%s&bs=%s&hex=%s&to=%s&output=%s";
     // 经纬度转地理信息接口
     public static final String GECODE_CONVERT_URL = "https://restapi.amap.com/v3/geocode/regeo?key=f11511080fd76b66485b50902cb00a75&location=%s";
+    //  经纬度转高德地图信息接口
+    public static final String COORDINATE_CONVERT_URL = "https://restapi.amap.com/v3/assistant/coordinate/convert?key=f11511080fd76b66485b50902cb00a75&coordsys=gps&locations=%s,%s";
     // 天气转换接口
     public static final String WEATHER_CONVERT_URL = "http://v.juhe.cn/weather/geo?key=e0fca72351651e3c4e910ed848f57d0f&dtype=json&format=1&lon=%s&lat=%s";
 }
