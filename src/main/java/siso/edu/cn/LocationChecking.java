@@ -177,8 +177,20 @@ public class LocationChecking {
                 aGpsEntity = JSON.parseObject(data, AGpsEntity.class);
             } else {
                 aGpsEntity = new AGpsEntity();
-                aGpsEntity.setLatitude(resultSet.getBigDecimal("latitude"));
-                aGpsEntity.setLongitude(resultSet.getBigDecimal("longitude"));
+
+                // 把GPS转化为高德经纬度
+                String coordinateUrl = String.format(
+                        GlobalSetting.COORDINATE_CONVERT_URL,
+                        (Object[]) new String[] {String.valueOf(longitude), String.valueOf(latitude)});
+                Request request = new Request.Builder().url(coordinateUrl).build();
+                String data = client.newCall(request).execute().body().string();
+                GpsEntity gpsEntity = JSON.parseObject(data, GpsEntity.class);
+
+                String[] locations = gpsEntity.getLocations().split(",");
+
+                aGpsEntity.setLongitude(new BigDecimal(locations[0]).setScale(6, BigDecimal.ROUND_DOWN));
+                aGpsEntity.setLatitude(new BigDecimal(locations[1]).setScale(6, BigDecimal.ROUND_DOWN));
+
                 aGpsEntity.setStatus(200);
             }
 
@@ -227,17 +239,13 @@ public class LocationChecking {
             if ((!previousCity.equals(StringUtils.EMPTY) && city.equals(previousCity)) ||
                     aGpsEntity.getResult() == null ||
                     (resultSet.getString("province") == null && resultSet.getBigDecimal("longitude") != null)) {
-                if (resultSet.getBigDecimal("longitude") == null) {
-                    statement.executeUpdate(String.format(GlobalSetting.UPDATE_SQL,
-                            aGpsEntity.getLongitude(),
-                            aGpsEntity.getLongitude().compareTo(new BigDecimal(0)) > 0 ? 69 : 87,
-                            aGpsEntity.getLatitude(),
-                            aGpsEntity.getLatitude().compareTo(new BigDecimal(0)) > 0 ? 78 : 83,
-                            province, city, district, id));
-                } else {
-                    statement.executeUpdate(String.format(GlobalSetting.UPDATE_LOCAL_SQL,
-                            province, city, district, id));
-                }
+                // 更新所有
+                statement.executeUpdate(String.format(GlobalSetting.UPDATE_SQL,
+                        aGpsEntity.getLongitude(),
+                        aGpsEntity.getLongitude().compareTo(new BigDecimal(0)) > 0 ? 69 : 87,
+                        aGpsEntity.getLatitude(),
+                        aGpsEntity.getLatitude().compareTo(new BigDecimal(0)) > 0 ? 78 : 83,
+                        province, city, district, id));
 
                 // 获取天气信息
                 String weatherUrl = String.format(
