@@ -1,15 +1,10 @@
 language: java
 sudo: false
-matrix:
-  include:
-  - env: JDK='Oracle JDK 8'
-    jdk: oraclejdk8
+jdk:
+  - openjdk8
 before_install:
 - chmod +x ./gradlew
 script:
-- echo PATH = ${PATH}
-- echo JAVA_HOME = ${JAVA_HOME}
-- java -version
 - "./gradlew build --info"
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
